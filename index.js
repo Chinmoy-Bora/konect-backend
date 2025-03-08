@@ -4,6 +4,9 @@ const app = express();
 const sessionRoutes = require('./routes/sessionRoutes');
 require('./db'); // Establish MongoDB connection
 const admin = require('./firebase');
+const cors = require("cors");
+app.use(cors());
+
 
 // Middleware to parse JSON bodies
 app.use(express.json());
