@@ -54,19 +54,26 @@ router.post('/trigger-alert', async (req, res) => {
     const messagePromises = targetTokens.map(token => {
       const message = {
           token,
-          data: {
+          notification: {
               title: "Emergency Alert",
-              body: "Someone is missing you !!",
+              body: "Someone is missing you!"
+          },
+          data: {
               playSound: "true",
               session: sessionCode,
               action: "ring"
           },
           android: {
-              priority: "high"
+              priority: "high",
+              notification: {
+                  channelId: "alert-channel",
+                  sound: "default"
+              }
           },
           apns: {
               payload: {
                   aps: {
+                      sound: "default",
                       contentAvailable: true
                   }
               }
@@ -74,6 +81,7 @@ router.post('/trigger-alert', async (req, res) => {
       };
       return admin.messaging().send(message);
   });
+  
   
     const responses = await Promise.all(messagePromises);
     console.log('Successfully sent message:', responses);
