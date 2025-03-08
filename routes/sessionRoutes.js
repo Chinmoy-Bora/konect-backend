@@ -52,20 +52,29 @@ router.post('/trigger-alert', async (req, res) => {
 
     // Construct the push notification payload
     const messagePromises = targetTokens.map(token => {
-        const message = {
+      const message = {
           token,
-          notification: {
-            title: 'Alert',
-            body: 'Ring!'
-          },
           data: {
-            session: sessionCode,
-            action: 'ring'
+              title: "Emergency Alert",
+              body: "Someone is missing you !!",
+              playSound: "true",
+              session: sessionCode,
+              action: "ring"
+          },
+          android: {
+              priority: "high"
+          },
+          apns: {
+              payload: {
+                  aps: {
+                      contentAvailable: true
+                  }
+              }
           }
-        };
-        // Call send for each message; dryRun is set to false.
-        return admin.messaging().send(message, false);
-      });
+      };
+      return admin.messaging().send(message);
+  });
+  
     const responses = await Promise.all(messagePromises);
     console.log('Successfully sent message:', responses);
     res.status(200).json({ success: true, responses });
