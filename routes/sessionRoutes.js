@@ -55,10 +55,8 @@ router.post('/trigger-alert', async (req, res) => {
       const message = {
           token,
           notification: {
-            title: "Alert!",
-            body: "This is an important notification.",
-            sound: "sound_2",
-            android_channel_id: "default"
+              title: "Alert!",
+              body: "This is an important notification."
           },
           data: {
               playSound: "true",
@@ -68,14 +66,14 @@ router.post('/trigger-alert', async (req, res) => {
           android: {
               priority: "high",
               notification: {
-                  channelId: "alert-channel",
-                  sound: "sound_2"
+                  channelId: "alert-channel", // ✅ Correct key
+                  sound: "sound_2" // ✅ Correct placement
               }
           },
           apns: {
               payload: {
                   aps: {
-                      sound: "sound_2",
+                      sound: "sound_2", // ✅ Correct placement for iOS
                       contentAvailable: true
                   }
               }
@@ -83,6 +81,7 @@ router.post('/trigger-alert', async (req, res) => {
       };
       return admin.messaging().send(message);
   });
+  
   
   
     const responses = await Promise.all(messagePromises);
