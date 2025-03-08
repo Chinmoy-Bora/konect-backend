@@ -55,8 +55,10 @@ router.post('/trigger-alert', async (req, res) => {
       const message = {
           token,
           notification: {
-              title: "Emergency Alert",
-              body: "Someone is missing you!"
+            title: "Alert!",
+            body: "This is an important notification.",
+            sound: "sound_2",
+            android_channel_id: "default"
           },
           data: {
               playSound: "true",
@@ -67,13 +69,13 @@ router.post('/trigger-alert', async (req, res) => {
               priority: "high",
               notification: {
                   channelId: "alert-channel",
-                  sound: "default"
+                  sound: "sound_2"
               }
           },
           apns: {
               payload: {
                   aps: {
-                      sound: "default",
+                      sound: "sound_2",
                       contentAvailable: true
                   }
               }
