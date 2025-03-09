@@ -56,7 +56,7 @@ router.post('/trigger-alert', async (req, res) => {
           token,
           notification: {
               title: "🔔 Knock knock !!",
-              body: "Someone s missing you! 🥺"
+              body: "Someone is missing you! 🥺"
           },
           data: {
               playSound: "true",
