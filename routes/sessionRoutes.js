@@ -55,8 +55,8 @@ router.post('/trigger-alert', async (req, res) => {
       const message = {
           token,
           notification: {
-              title: "Alert!",
-              body: "This is an important notification."
+              title: "🔔 Alert!",
+              body: "🚨 This is an important notification."
           },
           data: {
               playSound: "true",
@@ -66,21 +66,25 @@ router.post('/trigger-alert', async (req, res) => {
           android: {
               priority: "high",
               notification: {
-                  channelId: "alert-channel", // ✅ Correct key
-                  sound: "sound_2" // ✅ Correct placement
+                  channelId: "custom_channel", // ✅ Matches Notifee channelId
+                  sound: "sound_3" // ✅ Matches your sound file
               }
           },
           apns: {
+              headers: {
+                  "apns-priority": "10" // ✅ Ensures immediate delivery on iOS
+              },
               payload: {
                   aps: {
-                      sound: "sound_2", // ✅ Correct placement for iOS
+                      sound: "sound_3", // ✅ Matches iOS sound file
                       contentAvailable: true
                   }
               }
           }
       };
       return admin.messaging().send(message);
-  });
+    });
+    
   
   
   
